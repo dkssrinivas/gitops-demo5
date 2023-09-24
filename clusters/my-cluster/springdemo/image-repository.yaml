@@ -1,0 +1,11 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: springdemo
+  namespace: flux-system
+spec:
+  secretRef:
+    name: regcred
+  image: smarsh-docker-snapshot-local.jfrog.io/springdemo
+  interval: 1m0s

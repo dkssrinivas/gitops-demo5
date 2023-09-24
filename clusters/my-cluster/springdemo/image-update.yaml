@@ -1,0 +1,32 @@
+#   Read more: https://githubmemory.com/repo/fluxcd/image-automation-controller/issues/85
+#     - should check back periodically to see if this gets resolved
+
+# Documentation for image-update
+# - https://fluxcd.io/docs/guides/image-update/
+# 
+
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: springdemo
+  namespace: flux-system
+spec:
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: smarsh-fluxcd@users.noreply.smarsh.com
+        name: smarsh-fluxcd
+      messageTemplate: '{{range .Updated.Images}}{{println .}}{{end}}'
+    push:
+      branch: main
+  interval: 1m00s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  update:
+    path: ./clusters/my-cluster/springdemo
+    strategy: Setters
