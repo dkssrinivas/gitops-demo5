@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment # Kubernetes resource kind we are creating
+metadata:
+  name: springdemo2
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: springdemo2
+  replicas: 1 # Number of replicas that will be created for this deployment
+  template:
+    metadata:
+      labels:
+        app: springdemo2
+    spec:
+      containers:
+        - name: springdemo2
+          image: smarsh-docker-snapshot-local.jfrog.io/springdemo:spring-demo-1692267346 # {"$imagepolicy": "flux-system:springdemo2"}
+# Image that will be used to containers in the cluster
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080 
+      imagePullSecrets:
+        - name: regcred
+# The port that the container is running on in the cluster
